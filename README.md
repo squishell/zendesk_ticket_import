@@ -55,8 +55,4 @@ The Zendesk Bulk Ticket Importer is a Python-based tool designed to automate the
 ## Customization
 
 - **Modify Ticket Fields**:
-  Adjust the `config.py` and `main.py` to customize the ticket creation process, including which fields to use from your CSV files.
-
-## License
-
-This project is licensed under the MIT License.
+  Adjust the `config.py` and `main.py` to customize the ticket creation process, including which fields to use from your CSV files.s
