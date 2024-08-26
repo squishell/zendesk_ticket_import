@@ -1,0 +1,16 @@
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore environment variable files
+.env
+
+# Ignore JSON output files
+*.json
+
+# Ignore log files
+*.log
+
+# Ignore CSV files
+*.csv
