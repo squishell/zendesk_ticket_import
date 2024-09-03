@@ -29,10 +29,20 @@ def create_ticket_json(csv_rows, output_filename, subject_fields, description_fi
             description = " - ".join(description_parts)
 
             # Dynamically set custom fields based on config
-            custom_fields = []
-            for field_id, default_value in CUSTOM_FIELDS.items():
-                value = row.get(default_value.get('csv_field', ''), '').strip() if default_value.get('csv_field') else default_value['value']
-                custom_fields.append({"id": field_id, "value": value})
+            custom_fields = [
+                {
+                    "id": CUSTOM_FIELDS['AP_Forms']['id'],
+                    "value": CUSTOM_FIELDS['AP_Forms']['value']
+                },
+                {
+                    "id": CUSTOM_FIELDS['Invoice_Register_ID']['id'],
+                    "value": row.get('Control', '').strip()  # Dynamically set from CSV
+                },
+                {
+                    "id": CUSTOM_FIELDS['Batch_ID']['id'],
+                    "value": row.get('Batch', '').strip()  # Dynamically set from CSV
+                }
+            ]
 
             # Construct ticket dictionary
             date_value = datetime.now().strftime('%Y-%m-%d')

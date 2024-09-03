@@ -17,3 +17,6 @@ __pycache__/
 
 # Ignore CSV files
 *.csv
+
+# Ignore config.py
+config.py

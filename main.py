@@ -1,11 +1,12 @@
 import os
 import csv
+import glob
 import logging
 from ticket_creator import create_ticket_json
 from zendesk_import import ticket_import
 
 # Set up logging
-#logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def setup_directories():
     """
@@ -29,6 +30,22 @@ def setup_directories():
         return False
     
     return True
+
+def cleanup_files(directory, file_extension):
+    """
+    Remove all files with the specified extension in the given directory.
+
+    Args:
+        directory (str): Path to the directory containing files.
+        file_extension (str): The file extension to look for (e.g., '.csv', '.json').
+    """
+    files_to_remove = glob.glob(os.path.join(directory, f"*{file_extension}"))
+    for file_path in files_to_remove:
+        try:
+            os.remove(file_path)
+            logging.info(f"Deleted file: {file_path}")
+        except OSError as e:
+            logging.error(f"Error deleting file {file_path}: {e}")
 
 if __name__ == "__main__":
     # Initial setup
@@ -65,3 +82,7 @@ if __name__ == "__main__":
             json_file_path = os.path.join(json_dir, json_filename)
             logging.info(f"Importing tickets from JSON file '{json_filename}'.")
             ticket_import(json_file_path)
+
+    # Cleanup CSV and JSON files after processing
+    cleanup_files(csv_dir, '.csv')
+    cleanup_files(json_dir, '.json')
